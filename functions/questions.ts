@@ -7,7 +7,10 @@ export const onRequestGet = async () => {
     },
   };
 
-  const res = await fetch("/questions.json", init);
+  const res = await fetch(
+    "https://autoshkolla-web.pages.dev/questions.json",
+    init
+  );
   const questions: QuestionData = await res.json();
   const selectedQuestions = randomQuestions(questions);
 
