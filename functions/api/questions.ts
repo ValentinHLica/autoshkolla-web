@@ -1,4 +1,4 @@
-import { QuestionData, randomQuestions } from "./utils/helper";
+import { QuestionData, randomQuestions } from "../utils/helper";
 
 export const onRequestGet = async () => {
   const init = {
