@@ -248,3 +248,14 @@
     }
   }
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  svg {
+    font-size: 2em;
+  }
+}

@@ -9,6 +9,7 @@ import {
   CheckSolidIcon,
   ClockIcon,
   ImageIcon,
+  LoadingIcon,
   QuestionMarkSolidIcon,
   RefreshIcon,
   XSolidIcon,
@@ -56,138 +57,147 @@ const Results: React.FC<Props> = ({ location }) => {
   return (
     <Layout>
       <Seo title="Rezultatet" />
-      <section className={styles.results}>
-        <div
-          className={`${styles.result} ${
-            styles[`result__${hasFailed ? "failed" : "success"}`]
-          }`}
-        >
-          <div className={styles.result__title}>
-            {hasFailed ? <XSolidIcon /> : <CheckSolidIcon />}
 
-            <h1>
-              {hasFailed ? "Fatekeqesisht nuk kaloni!" : "Suksese kaluat!"}
-            </h1>
-          </div>
-
-          <div className={styles.illustration}>
-            <img
-              src={`/illustrations/drawkit-transport-scene-${
-                hasFailed ? 10 : 3
-              }.svg`}
-              alt="Illustration"
-            />
-          </div>
-
-          <Button
-            size="xl"
-            color={hasFailed ? "red" : "green"}
-            onClick={() => navigate(-1)}
+      {questions.length > 0 ? (
+        <section className={styles.results}>
+          <div
+            className={`${styles.result} ${
+              styles[`result__${hasFailed ? "failed" : "success"}`]
+            }`}
           >
-            <RefreshIcon />
-            Provo Perseri
-          </Button>
-        </div>
+            <div className={styles.result__title}>
+              {hasFailed ? <XSolidIcon /> : <CheckSolidIcon />}
 
-        <div className={styles.questions__wrapper}>
-          <ul className={styles.question__stats}>
-            <li>
-              <span>
-                <strong>Ju mbaruat provimin ne:</strong> <ClockIcon />{" "}
-                {40 - timeCounter} min
-              </span>
-            </li>
-            <li>
-              <span>
-                <CheckSolidIcon />
-                <strong>Pergjigje te sakta: </strong>
-                {correctQuestions.length}
-              </span>
-              <span>
-                <XSolidIcon />
-                <strong>Gabime: </strong>
-                {wrongQuestions.length}
-              </span>
-              <span>
-                <QuestionMarkSolidIcon />
-                <strong>Mungojne: </strong>
-                {emptyQuestions.length}
-              </span>
-            </li>
-          </ul>
+              <h1>
+                {hasFailed ? "Fatekeqesisht nuk kaloni!" : "Suksese kaluat!"}
+              </h1>
+            </div>
 
-          <ul className={styles.questions}>
-            {questions.map((question, index) => {
-              const { text, image, answer, userAnswer } = question;
+            <div className={styles.illustration}>
+              <img
+                src={`/illustrations/drawkit-transport-scene-${
+                  hasFailed ? 10 : 3
+                }.svg`}
+                alt="Illustration"
+              />
+            </div>
 
-              let type: "correct" | "wrong" | "empty" =
-                userAnswer === null
-                  ? "empty"
-                  : userAnswer === answer
-                  ? "correct"
-                  : "wrong";
+            <Button
+              size="xl"
+              color={hasFailed ? "red" : "green"}
+              onClick={() => navigate(-1)}
+            >
+              <RefreshIcon />
+              Provo Perseri
+            </Button>
+          </div>
 
-              const icon = (() => {
-                switch (type) {
-                  case "correct":
-                    return <CheckSolidIcon />;
+          <div className={styles.questions__wrapper}>
+            <ul className={styles.question__stats}>
+              <li>
+                <span>
+                  <strong>Ju mbaruat provimin ne:</strong> <ClockIcon />{" "}
+                  {40 - timeCounter} min
+                </span>
+              </li>
+              <li>
+                <span>
+                  <CheckSolidIcon />
+                  <strong>Pergjigje te sakta: </strong>
+                  {correctQuestions.length}
+                </span>
+                <span>
+                  <XSolidIcon />
+                  <strong>Gabime: </strong>
+                  {wrongQuestions.length}
+                </span>
+                <span>
+                  <QuestionMarkSolidIcon />
+                  <strong>Mungojne: </strong>
+                  {emptyQuestions.length}
+                </span>
+              </li>
+            </ul>
 
-                  case "wrong":
-                    return <XSolidIcon />;
+            <ul className={styles.questions}>
+              {questions.map((question, index) => {
+                const { text, image, answer, userAnswer } = question;
 
-                  case "empty":
-                    return <QuestionMarkSolidIcon />;
-                }
-              })();
+                let type: "correct" | "wrong" | "empty" =
+                  userAnswer === null
+                    ? "empty"
+                    : userAnswer === answer
+                    ? "correct"
+                    : "wrong";
 
-              return (
-                <li
-                  className={`${styles.question} ${
-                    styles[`question__${type}`]
-                  }`}
-                  key={index}
-                >
-                  <div>
-                    <div className={styles.question__content}>
-                      <div className={styles.image}>
-                        {image ? (
-                          <img src={`/images/${image}.png`} alt="Question" />
-                        ) : (
-                          <ImageIcon />
-                        )}
+                const icon = (() => {
+                  switch (type) {
+                    case "correct":
+                      return <CheckSolidIcon />;
+
+                    case "wrong":
+                      return <XSolidIcon />;
+
+                    case "empty":
+                      return <QuestionMarkSolidIcon />;
+                  }
+                })();
+
+                return (
+                  <li
+                    className={`${styles.question} ${
+                      styles[`question__${type}`]
+                    }`}
+                    key={index}
+                  >
+                    <div>
+                      <div className={styles.question__content}>
+                        <div className={styles.image}>
+                          {image ? (
+                            <img src={`/images/${image}.png`} alt="Question" />
+                          ) : (
+                            <ImageIcon />
+                          )}
+                        </div>
+
+                        <p>{text}</p>
                       </div>
 
-                      <p>{text}</p>
+                      <ul className={styles.question__vote}>
+                        <li>
+                          <Checkbox
+                            checked={!!(userAnswer !== null && answer === true)}
+                            id="correct"
+                            disabled
+                          />
+                          <label htmlFor="correct">Sakte</label>
+                        </li>
+
+                        <li>
+                          <Checkbox
+                            checked={
+                              !!(userAnswer !== null && answer === false)
+                            }
+                            id="wrong"
+                            disabled
+                          />
+                          <label htmlFor="wrong">Gabim</label>
+                        </li>
+                      </ul>
                     </div>
 
-                    <ul className={styles.question__vote}>
-                      <li>
-                        <Checkbox
-                          checked={!!(userAnswer !== null && answer === true)}
-                          id="correct"
-                          disabled
-                        />
-                        <label htmlFor="correct">Sakte</label>
-                      </li>
-
-                      <li>
-                        <Checkbox
-                          checked={!!(userAnswer !== null && answer === false)}
-                          id="wrong"
-                          disabled
-                        />
-                        <label htmlFor="wrong">Gabim</label>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className={styles.icon}>{icon}</div>
-                </li>
-              );
-            })}
-          </ul>
+                    <div className={styles.icon}>{icon}</div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      ) : (
+        <div className={styles.loading}>
+          <LoadingIcon />
         </div>
-      </section>
+      )}
     </Layout>
   );
 };
