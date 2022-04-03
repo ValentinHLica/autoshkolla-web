@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { navigate } from "gatsby";
+import { Link, navigate } from "gatsby";
 
 import { ExamOptions, QuestionList } from "@interface/utils";
 
@@ -12,6 +12,7 @@ import {
   ChevronRightIcon,
   EyeOpenIcon,
   ImageIcon,
+  LoadingIcon,
 } from "@icon";
 
 import * as styles from "@styles/pages/exam.module.scss";
@@ -25,8 +26,6 @@ type Props = {
 };
 
 const ExamPage: React.FC<Props> = ({ location }) => {
-  console.log(location);
-
   const [examType, setExamType] = useState<ExamOptions>("normal");
   const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [questionIndex, setQuestionIndex] = useState<number>(0);
@@ -51,19 +50,28 @@ const ExamPage: React.FC<Props> = ({ location }) => {
       const res = await fetch("/api/questions");
       const questions = await res.json();
       setQuestions(
-        (questions as QuestionList[]).map((e) => ({ ...e, userAnswer: null }))
+        (questions as QuestionList[]).map((e) => ({
+          ...e,
+          userAnswer:
+            location &&
+            location.state &&
+            location.state.examType &&
+            location.state.examType === "solved"
+              ? e.answer
+              : null,
+        }))
       );
     } catch (error) {}
   };
 
   useEffect(() => {
-    fetchQuestions();
-
     setExamType(
       location && location.state && location.state.examType
         ? location.state.examType
         : "normal"
     );
+
+    fetchQuestions();
 
     const timer = setInterval(() => {
       setTimeCounter((prevState) =>
@@ -77,10 +85,6 @@ const ExamPage: React.FC<Props> = ({ location }) => {
 
     // eslint-disable-next-line
   }, []);
-
-  if (questions.length === 0) {
-    return <div>Loading...</div>;
-  }
 
   const onChange = (state: boolean) => {
     setQuestions((prevState) =>
@@ -97,129 +101,138 @@ const ExamPage: React.FC<Props> = ({ location }) => {
     );
   };
 
-  const { text, image, answer, userAnswer } = questions[questionIndex];
-
   return (
     <Layout>
       <Seo title="Provimi" />
 
-      <section className={styles.exam}>
-        <div className={styles.exam__info}>
-          <p>
-            Pyetja {questionIndex + 1} nga {questions.length}
-          </p>
+      {questions.length < 0 ? (
+        <Fragment>
+          {(() => {
+            const { text, image, answer, userAnswer } =
+              questions[questionIndex];
 
-          <p>{timeCounter} min</p>
-        </div>
+            return (
+              <section className={styles.exam}>
+                <div className={styles.exam__info}>
+                  <p>
+                    Pyetja {questionIndex + 1} nga {questions.length}
+                  </p>
 
-        <div className={styles.question}>
-          <h3 className={styles.question__text}>{text}</h3>
+                  <p>{timeCounter} min</p>
+                </div>
 
-          <div className={styles.question__details}>
-            <div className={styles.question__image}>
-              {image ? (
-                <img src={`/images/${image}.png`} alt="Question" />
-              ) : (
-                <ImageIcon />
-              )}
-            </div>
+                <div className={styles.question}>
+                  <h3 className={styles.question__text}>{text}</h3>
 
-            <div className={styles.question__vote}>
-              <ul>
-                <li onClick={() => onChange(true)}>
-                  <Checkbox
-                    checked={!!(userAnswer !== null && userAnswer === true)}
-                    id="correct"
-                  />
-                  <label htmlFor="correct">Sakte</label>
-                </li>
+                  <div className={styles.question__details}>
+                    <div className={styles.question__image}>
+                      {image ? (
+                        <img src={`/images/${image}.png`} alt="Question" />
+                      ) : (
+                        <ImageIcon />
+                      )}
+                    </div>
 
-                <li onClick={() => onChange(false)}>
-                  <Checkbox
-                    checked={!!(userAnswer !== null && userAnswer === false)}
-                    id="wrong"
-                  />
-                  <label htmlFor="wrong">Gabim</label>
-                </li>
-              </ul>
+                    <div className={styles.question__vote}>
+                      <ul>
+                        <li onClick={() => onChange(true)}>
+                          <Checkbox
+                            checked={
+                              !!(userAnswer !== null && userAnswer === true)
+                            }
+                            id="correct"
+                          />
+                          <label htmlFor="correct">Sakte</label>
+                        </li>
 
-              {examType === "help" && (
-                <Button onClick={() => onChange(answer)}>
-                  <EyeOpenIcon />
+                        <li onClick={() => onChange(false)}>
+                          <Checkbox
+                            checked={
+                              !!(userAnswer !== null && userAnswer === false)
+                            }
+                            id="wrong"
+                          />
+                          <label htmlFor="wrong">Gabim</label>
+                        </li>
+                      </ul>
+
+                      {examType === "help" && (
+                        <Button onClick={() => onChange(answer)}>
+                          <EyeOpenIcon />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.questions__navigation}>
+                  <ul className={styles.pagination}>
+                    {questions.map((_, index) => (
+                      <li
+                        onClick={() => setQuestionIndex(index)}
+                        key={index}
+                        className={`${styles.pagination__item} ${
+                          index === questionIndex
+                            ? styles.pagination__item__selected
+                            : ""
+                        } ${
+                          questions[index].userAnswer !== null
+                            ? styles.pagination__item__answered
+                            : ""
+                        }`}
+                      >
+                        {index + 1}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className={styles.navigation__arrows}>
+                    <Button size="xl" onClick={previousHandler}>
+                      <ChevronLeftIcon />
+                    </Button>
+
+                    <Button size="xl" onClick={nextHandler}>
+                      {questionIndex === questions.length - 1 ? (
+                        "Mbaro"
+                      ) : (
+                        <>
+                          <ChevronRightIcon />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </section>
+            );
+          })()}
+
+          <Modal visible={modal} setVisible={setModal}>
+            <div className={styles.modal__content}>
+              <h1 className={styles.modal__title}>Mbaro Testin</h1>
+
+              <img
+                className={styles.modal__image}
+                src="/illustrations/drawkit-transport-scene-2.svg"
+                alt="End"
+              />
+
+              <div className={styles.modal__actions}>
+                <Link to="/results" state={{ questions, timeCounter }}>
+                  <Button size="xl">Po</Button>
+                </Link>
+
+                <Button color="red" size="xl" onClick={() => setModal(false)}>
+                  Jo
                 </Button>
-              )}
+              </div>
             </div>
-          </div>
+          </Modal>
+        </Fragment>
+      ) : (
+        <div className={styles.loading}>
+          <LoadingIcon />
         </div>
-
-        <div className={styles.questions__navigation}>
-          <ul className={styles.pagination}>
-            {questions.map((_, index) => (
-              <li
-                onClick={() => setQuestionIndex(index)}
-                key={index}
-                className={`${styles.pagination__item} ${
-                  index === questionIndex
-                    ? styles.pagination__item__selected
-                    : ""
-                } ${
-                  questions[index].userAnswer !== null
-                    ? styles.pagination__item__answered
-                    : ""
-                }`}
-              >
-                {index + 1}
-              </li>
-            ))}
-          </ul>
-
-          <div className={styles.navigation__arrows}>
-            <Button size="xl" onClick={previousHandler}>
-              <ChevronLeftIcon />
-            </Button>
-
-            <Button size="xl" onClick={nextHandler}>
-              {questionIndex === questions.length - 1 ? (
-                "Mbaro"
-              ) : (
-                <>
-                  <ChevronRightIcon />
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <Modal visible={modal} setVisible={setModal}>
-        <div className={styles.modal__content}>
-          <h1 className={styles.modal__title}>Mbaro Testin</h1>
-
-          <img
-            className={styles.modal__image}
-            src="/illustrations/drawkit-transport-scene-2.svg"
-            alt="End"
-          />
-
-          <div className={styles.modal__actions}>
-            <Button
-              size="xl"
-              onClick={() => {
-                // setResultsQuestions(questions);
-                // setResultsTimeCounter(timeCounter);
-
-                navigate("/results");
-              }}
-            >
-              Po
-            </Button>
-
-            <Button color="red" size="xl" onClick={() => setModal(false)}>
-              Jo
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      )}
     </Layout>
   );
 };

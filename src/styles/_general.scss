@@ -41,6 +41,20 @@ a {
 .icon {
   width: 1em;
   height: 1em;
+
+  &.loading {
+    animation: spin 1s infinite;
+  }
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 /* ScrollBard */
