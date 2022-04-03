@@ -30,18 +30,12 @@ const Results: React.FC<Props> = ({ location }) => {
   const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [timeCounter, setTimeCounter] = useState<number>(0);
 
-  console.log(location);
-
   useEffect(() => {
-    if (
-      location.state &&
-      location.state.questions &&
-      location.state.questions.length === 0
-    ) {
+    if (location.state && location.state.questions) {
       setQuestions(location.state.questions);
       setTimeCounter(location.state.timeCounter);
     } else {
-      // navigate("/");
+      navigate("/");
     }
 
     // eslint-disable-next-line
