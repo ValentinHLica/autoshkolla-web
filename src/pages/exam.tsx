@@ -16,10 +16,15 @@ import {
 
 import * as styles from "@styles/pages/exam.module.scss";
 
-const ExamPage: React.FC = () => {
-  const historyState = window.history.state as { examType: ExamOptions } | null;
+type Props = {
+  location: {
+    state: { examType: ExamOptions } | null;
+  };
+};
+
+const ExamPage: React.FC<Props> = ({ location }) => {
   const examType = useRef<ExamOptions>(
-    historyState !== null ? historyState.examType : "normal"
+    location.state !== null ? location.state.examType : "normal"
   );
 
   const [questions, setQuestions] = useState<QuestionList[]>([]);

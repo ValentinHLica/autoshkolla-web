@@ -17,34 +17,39 @@ import { Button, Checkbox } from "@ui";
 
 import * as styles from "@styles/pages/results.module.scss";
 
-const Results: React.FC = () => {
-  const historyState = window.history.state as {
+type Props = {
+  location: {
+    state: {
+      questions: QuestionList[];
+      timeCounter: number;
+    } | null;
+  };
+};
+
+const Results: React.FC<Props> = ({ location }) => {
+  const examData = useRef<{
     questions: QuestionList[];
     timeCounter: number;
-  } | null;
-  const examType = useRef<{
-    questions: QuestionList[];
-    timeCounter: number;
-  } | null>(historyState);
+  } | null>(location.state);
 
   useEffect(() => {
     if (
-      historyState === null ||
-      !historyState.questions ||
-      historyState.questions.length === 0
+      examData.current === null ||
+      !examData.current.questions ||
+      examData.current.questions.length === 0
     )
       navigate("/");
     // eslint-disable-next-line
   }, []);
 
   if (
-    historyState === null ||
-    !historyState.questions ||
-    historyState.questions.length === 0
+    examData.current === null ||
+    !examData.current.questions ||
+    examData.current.questions.length === 0
   )
     return <div>Loading...</div>;
 
-  const { questions, timeCounter } = historyState;
+  const { questions, timeCounter } = examData.current;
 
   const correctQuestions = questions.filter(
     (q) => q.userAnswer !== null && q.userAnswer === q.answer
