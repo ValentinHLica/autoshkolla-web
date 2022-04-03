@@ -16,7 +16,8 @@
       "@styles/*": ["styles/*"],
       "@interface/*": ["interface/*"],
       "@ui": ["components/UI/index.tsx"],
-      "@icon": ["components/CustomIcons.tsx"]
+      "@icon": ["components/CustomIcons.tsx"],
+      "@context": ["components/Context.tsx"]
     }
   },
   "include": ["./src/**/*", "functions/utils"]
