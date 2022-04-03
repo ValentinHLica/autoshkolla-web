@@ -39,7 +39,7 @@ const Results: React.FC<Props> = ({ location }) => {
       setQuestions(location.state.questions);
       setTimeCounter(location.state.timeCounter);
     } else {
-      navigate("/");
+      // navigate("/");
     }
 
     // eslint-disable-next-line
