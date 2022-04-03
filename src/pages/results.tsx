@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { navigate } from "gatsby";
 
-import { ExamOptions, QuestionList } from "@interface/utils";
+import { QuestionList } from "@interface/utils";
 
 import Layout from "@components/Layout";
+import Seo from "@components/Seo";
 import {
   CheckSolidIcon,
   ClockIcon,
@@ -15,7 +16,6 @@ import {
 import { Button, Checkbox } from "@ui";
 
 import * as styles from "@styles/pages/results.module.scss";
-import Seo from "@components/Seo";
 
 const Results: React.FC = () => {
   const historyState = window.history.state as {
