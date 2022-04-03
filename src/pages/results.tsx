@@ -42,12 +42,7 @@ const Results: React.FC<Props> = ({ location }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (
-    examData.current === null ||
-    !examData.current.questions ||
-    examData.current.questions.length === 0
-  )
-    return <div>Loading...</div>;
+  if (examData.current === null) return <div>Loading...</div>;
 
   const { questions, timeCounter } = examData.current;
 
