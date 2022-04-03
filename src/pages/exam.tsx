@@ -5,7 +5,7 @@ import { QuestionList, ExamOptions } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
-import Context from "@context";
+import Context from "../components/Context";
 
 import { Button, Checkbox, Modal } from "@ui";
 import {
