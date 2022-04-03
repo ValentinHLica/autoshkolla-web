@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "gatsby";
 
 import { ExamOptions } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
-import Context from "@context";
 import { Button, Checkbox } from "@ui";
 import { ClipboardIcon, ClipboardInIcon, ClipboardListIcon } from "@icon";
 
 import * as styles from "@styles/pages/home.module.scss";
 
 const HomePage: React.FC = () => {
+  const [examType, setExamType] = useState<ExamOptions>("normal");
+
   const options: {
     text: string;
     type: ExamOptions;
@@ -37,36 +38,34 @@ const HomePage: React.FC = () => {
   return (
     <Layout>
       <Seo />
-      <Context.Consumer>
-        {({ examType, setExamType }) => (
-          <section className={styles.home}>
-            <img
-              src="/illustrations/drawkit-transport-scene-13.svg"
-              alt="Intro"
-            />
+      <section className={styles.home}>
+        <img src="/illustrations/drawkit-transport-scene-13.svg" alt="Intro" />
 
-            <ul className={styles.options}>
-              {options.map((options, index) => {
-                const { text, type, icon } = options;
+        <ul className={styles.options}>
+          {options.map((options, index) => {
+            const { text, type, icon } = options;
 
-                return (
-                  <li onClick={() => setExamType(type)} key={index}>
-                    <Checkbox checked={!!(examType && examType === type)} />
+            return (
+              <li onClick={() => setExamType(type)} key={index}>
+                <Checkbox checked={!!(examType && examType === type)} />
 
-                    {icon}
+                {icon}
 
-                    <p>{text}</p>
-                  </li>
-                );
-              })}
-            </ul>
+                <p>{text}</p>
+              </li>
+            );
+          })}
+        </ul>
 
-            <Link to={`/exam`}>
-              <Button size="xl">Fillo Provimin</Button>
-            </Link>
-          </section>
-        )}
-      </Context.Consumer>
+        <Link
+          to={`/exam`}
+          state={{
+            examType,
+          }}
+        >
+          <Button size="xl">Fillo Provimin</Button>
+        </Link>
+      </section>
     </Layout>
   );
 };
