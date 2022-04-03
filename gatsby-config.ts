@@ -49,7 +49,7 @@ const config: GatsbyConfig = {
           "@styles": "src/styles",
           "@interface": "src/interface",
           "@icon": "src/components/CustomIcons.tsx",
-          "@context": "src/components/Context.tsx",
+          "@context": "src/components/Contexti.tsx",
         },
       },
     },
