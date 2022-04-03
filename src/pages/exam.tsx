@@ -25,6 +25,8 @@ type Props = {
 };
 
 const ExamPage: React.FC<Props> = ({ location }) => {
+  console.log(location);
+
   const examType: ExamOptions =
     location && location.state && location.state.examType
       ? location.state.examType
