@@ -26,7 +26,9 @@ type Props = {
 
 const ExamPage: React.FC<Props> = ({ location }) => {
   const examType: ExamOptions =
-    location && location.state !== null ? location.state.examType : "normal";
+    location && location.state && location.state.examType
+      ? location.state.examType
+      : "normal";
   const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [questionIndex, setQuestionIndex] = useState<number>(0);
   const [timeCounter, setTimeCounter] = useState<number>(40);
