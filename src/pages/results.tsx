@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from "react";
-import { navigate } from "gatsby";
+// import { navigate } from "gatsby";
 
 import { QuestionList } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
-import {
-  CheckSolidIcon,
-  ClockIcon,
-  ImageIcon,
-  QuestionMarkSolidIcon,
-  RefreshIcon,
-  XSolidIcon,
-} from "@icon";
-import { Button, Checkbox } from "@ui";
+// import {
+//   CheckSolidIcon,
+//   ClockIcon,
+//   ImageIcon,
+//   QuestionMarkSolidIcon,
+//   RefreshIcon,
+//   XSolidIcon,
+// } from "@icon";
+// import { Button, Checkbox } from "@ui";
 
 import * as styles from "@styles/pages/results.module.scss";
 
@@ -27,42 +27,42 @@ type Props = {
 };
 
 const Results: React.FC<Props> = ({ location }) => {
-  const examData = useRef<{
-    questions: QuestionList[];
-    timeCounter: number;
-  } | null>(location.state);
+  // const examData = useRef<{
+  //   questions: QuestionList[];
+  //   timeCounter: number;
+  // } | null>(location.state);
 
-  useEffect(() => {
-    if (
-      examData.current === null ||
-      !examData.current.questions ||
-      examData.current.questions.length === 0
-    )
-      navigate("/");
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     examData.current === null ||
+  //     !examData.current.questions ||
+  //     examData.current.questions.length === 0
+  //   )
+  //     navigate("/");
+  //   // eslint-disable-next-line
+  // }, []);
 
-  if (examData.current === null) return <div>Loading...</div>;
+  // if (examData.current === null) return <div>Loading...</div>;
 
-  const { questions, timeCounter } = examData.current;
+  // const { questions, timeCounter } = examData.current;
 
-  const correctQuestions = questions.filter(
-    (q) => q.userAnswer !== null && q.userAnswer === q.answer
-  );
+  // const correctQuestions = questions.filter(
+  //   (q) => q.userAnswer !== null && q.userAnswer === q.answer
+  // );
 
-  const wrongQuestions = questions.filter(
-    (q) => q.userAnswer !== null && q.userAnswer !== q.answer
-  );
+  // const wrongQuestions = questions.filter(
+  //   (q) => q.userAnswer !== null && q.userAnswer !== q.answer
+  // );
 
-  const emptyQuestions = questions.filter((q) => q.userAnswer === null);
+  // const emptyQuestions = questions.filter((q) => q.userAnswer === null);
 
-  const hasFailed = correctQuestions.length < questions.length - 5;
+  // const hasFailed = correctQuestions.length < questions.length - 5;
 
   return (
     <Layout>
       <Seo title="Rezultatet" />
-
-      <section className={styles.results}>
+      heloo
+      {/* <section className={styles.results}>
         <div
           className={`${styles.result} ${
             styles[`result__${hasFailed ? "failed" : "success"}`]
@@ -193,7 +193,7 @@ const Results: React.FC<Props> = ({ location }) => {
             })}
           </ul>
         </div>
-      </section>
+      </section> */}
     </Layout>
   );
 };
