@@ -30,6 +30,8 @@ const Results: React.FC<Props> = ({ location }) => {
   const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [timeCounter, setTimeCounter] = useState<number>(0);
 
+  console.log(location);
+
   useEffect(() => {
     if (
       location.state &&
