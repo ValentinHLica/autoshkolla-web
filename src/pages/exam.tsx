@@ -105,7 +105,7 @@ const ExamPage: React.FC<Props> = ({ location }) => {
     <Layout>
       <Seo title="Provimi" />
 
-      {questions.length < 0 ? (
+      {questions.length > 0 ? (
         <Fragment>
           {(() => {
             const { text, image, answer, userAnswer } =
