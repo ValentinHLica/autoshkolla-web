@@ -5,7 +5,7 @@ import { ExamOptions } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
-import Context from "@context";
+import Context from "@components/Contexti";
 import { Button, Checkbox } from "@ui";
 import { ClipboardIcon, ClipboardInIcon, ClipboardListIcon } from "@icon";
 
