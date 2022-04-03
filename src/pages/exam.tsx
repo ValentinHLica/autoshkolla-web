@@ -50,7 +50,9 @@ const ExamPage: React.FC<Props> = ({ location }) => {
     try {
       const res = await fetch("/api/questions");
       const questions = await res.json();
-      setQuestions(questions as QuestionList[]);
+      setQuestions(
+        (questions as QuestionList[]).map((e) => ({ ...e, userAnswer: null }))
+      );
     } catch (error) {}
   };
 
