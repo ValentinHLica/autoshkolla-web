@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "gatsby";
 
 import { ExamOptions } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
+import Context from "@components/Context";
 import { Button, Checkbox } from "@ui";
 import { ClipboardIcon, ClipboardInIcon, ClipboardListIcon } from "@icon";
 
 import * as styles from "@styles/pages/home.module.scss";
 
 const HomePage: React.FC = () => {
-  const [examType, setExamType] = useState<ExamOptions>("normal");
+  const { examType, setExamType } = useContext(Context);
 
   const options: {
     text: string;
@@ -57,12 +58,7 @@ const HomePage: React.FC = () => {
           })}
         </ul>
 
-        <Link
-          to={`/exam`}
-          state={{
-            examType,
-          }}
-        >
+        <Link to={`/exam`}>
           <Button size="xl">Fillo Provimin</Button>
         </Link>
       </section>

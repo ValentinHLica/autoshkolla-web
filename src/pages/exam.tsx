@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "gatsby";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, navigate } from "gatsby";
 
 import { QuestionList, ExamOptions } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
+import Context from "@components/Context";
 
 import { Button, Checkbox, Modal } from "@ui";
 import {
@@ -16,16 +17,9 @@ import {
 
 import * as styles from "@styles/pages/exam.module.scss";
 
-type Props = {
-  location: {
-    state: { examType: ExamOptions } | null;
-  };
-};
-
-const ExamPage: React.FC<Props> = ({ location }) => {
-  const examType = useRef<ExamOptions>(
-    location.state !== null ? location.state.examType : "normal"
-  );
+const ExamPage: React.FC = () => {
+  const { examType, setResultsQuestions, setResultsTimeCounter } =
+    useContext(Context);
 
   const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [questionIndex, setQuestionIndex] = useState<number>(0);
@@ -60,11 +54,8 @@ const ExamPage: React.FC<Props> = ({ location }) => {
       );
     }, 60000);
 
-    // window.addEventListener("keydown", escFunction);
-
     return () => {
       clearInterval(timer);
-      // window.removeEventListener("keydown", escFunction);
     };
 
     // eslint-disable-next-line
@@ -87,6 +78,13 @@ const ExamPage: React.FC<Props> = ({ location }) => {
         return item;
       })
     );
+  };
+
+  const onFinish = () => {
+    setResultsQuestions(questions);
+    setResultsTimeCounter(timeCounter);
+
+    navigate("/results");
   };
 
   const { text, image, answer, userAnswer } = questions[questionIndex];
@@ -135,7 +133,7 @@ const ExamPage: React.FC<Props> = ({ location }) => {
                 </li>
               </ul>
 
-              {examType.current === "help" && (
+              {examType === "help" && (
                 <Button onClick={() => onChange(answer)}>
                   <EyeOpenIcon />
                 </Button>
@@ -194,15 +192,9 @@ const ExamPage: React.FC<Props> = ({ location }) => {
           />
 
           <div className={styles.modal__actions}>
-            <Link
-              to="/results"
-              state={{
-                questions,
-                timeCounter,
-              }}
-            >
-              <Button size="xl">Po</Button>
-            </Link>
+            <Button size="xl" onClick={onFinish}>
+              Po
+            </Button>
 
             <Button color="red" size="xl" onClick={() => setModal(false)}>
               Jo
