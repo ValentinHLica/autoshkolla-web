@@ -24,7 +24,14 @@ const config: GatsbyConfig = {
       },
     },
     "gatsby-plugin-mdx",
-    "gatsby-plugin-sharp",
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          backgroundColor: `transparent`,
+        },
+      },
+    },
     "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",

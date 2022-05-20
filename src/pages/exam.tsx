@@ -129,7 +129,10 @@ const ExamPage: React.FC<Props> = ({ location }) => {
                   <div className={styles.question__details}>
                     <div className={styles.question__image}>
                       {image ? (
-                        <img src={`/images/${image}.png`} alt="Question" />
+                        <img
+                          src={`../images/signs/${image}.png`}
+                          alt="Question"
+                        />
                       ) : (
                         <ImageIcon />
                       )}
@@ -218,15 +221,6 @@ const ExamPage: React.FC<Props> = ({ location }) => {
                 alt="End"
                 imgStyle={{ objectFit: "contain" }}
               />
-
-              {/* <StaticImage
-      src="../images/dino.png"
-      alt="A dinosaur"
-      placeholder="blurred"
-      layout="fixed"
-      width={200}
-      height={200}
-    /> */}
 
               <div className={styles.modal__actions}>
                 <Link to="/results" state={{ questions, timeCounter }}>
