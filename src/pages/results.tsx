@@ -17,6 +17,7 @@ import {
 import { Button, Checkbox } from "@ui";
 
 import * as styles from "@styles/pages/results.module.scss";
+import { StaticImage } from "gatsby-plugin-image";
 
 type Props = {
   location: {
@@ -74,11 +75,12 @@ const Results: React.FC<Props> = ({ location }) => {
             </div>
 
             <div className={styles.illustration}>
-              <img
+              <StaticImage
                 src={`/illustrations/drawkit-transport-scene-${
                   hasFailed ? 10 : 3
                 }.svg`}
                 alt="Illustration"
+                imgStyle={{ objectFit: "contain" }}
               />
             </div>
 

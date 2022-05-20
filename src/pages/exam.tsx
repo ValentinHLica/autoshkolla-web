@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, navigate } from "gatsby";
+import { Link } from "gatsby";
+
+import { StaticImage } from "gatsby-plugin-image";
 
 import { ExamOptions, QuestionList } from "@interface/utils";
 
@@ -210,11 +212,21 @@ const ExamPage: React.FC<Props> = ({ location }) => {
             <div className={styles.modal__content}>
               <h1 className={styles.modal__title}>Mbaro Testin</h1>
 
-              <img
+              <StaticImage
                 className={styles.modal__image}
-                src="/illustrations/drawkit-transport-scene-2.svg"
+                src="../images/illustrations/drawkit-transport-scene-2.svg"
                 alt="End"
+                imgStyle={{ objectFit: "contain" }}
               />
+
+              {/* <StaticImage
+      src="../images/dino.png"
+      alt="A dinosaur"
+      placeholder="blurred"
+      layout="fixed"
+      width={200}
+      height={200}
+    /> */}
 
               <div className={styles.modal__actions}>
                 <Link to="/results" state={{ questions, timeCounter }}>

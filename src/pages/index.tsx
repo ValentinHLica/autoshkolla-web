@@ -9,6 +9,7 @@ import { Button, Checkbox } from "@ui";
 import { ClipboardIcon, ClipboardInIcon, ClipboardListIcon } from "@icon";
 
 import * as styles from "@styles/pages/home.module.scss";
+import { StaticImage } from "gatsby-plugin-image";
 
 const HomePage: React.FC = () => {
   const [examType, setExamType] = useState<ExamOptions>("normal");
@@ -39,7 +40,13 @@ const HomePage: React.FC = () => {
     <Layout>
       <Seo />
       <section className={styles.home}>
-        <img src="/illustrations/drawkit-transport-scene-13.svg" alt="Intro" />
+        <div className={styles.poster}>
+          <StaticImage
+            src="../images/illustrations/drawkit-transport-scene-13.svg"
+            alt="Intro"
+            imgStyle={{ objectFit: "contain" }}
+          />
+        </div>
 
         <ul className={styles.options}>
           {options.map((options, index) => {
