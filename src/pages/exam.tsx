@@ -1,12 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "gatsby";
+import { graphql, Link } from "gatsby";
 
-import { ImageDataLike, StaticImage } from "gatsby-plugin-image";
-
-import questionsData from "../data/questions.json";
+import {
+  GatsbyImage,
+  getImage,
+  IGatsbyImageData,
+  ImageDataLike,
+  StaticImage,
+} from "gatsby-plugin-image";
 
 import { randomQuestions } from "@utils/helper";
-import { ExamOptions, QuestionList } from "@interface/utils";
+import { ExamOptions, Question, QuestionList } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
@@ -29,15 +33,9 @@ type Props = {
     } | null;
   };
   data: {
-    allFile: {
-      edges: {
-        node: {
-          name: string;
-          childImageSharp: {
-            gatsbyImageData: ImageDataLike;
-          };
-        };
-      }[];
+    dataYaml: {
+      noImage: Question[];
+      withImage: Question[];
     };
   };
 };
@@ -64,18 +62,22 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
 
   const fetchQuestions = async () => {
     try {
-      setQuestions(
-        randomQuestions(questionsData).map((e) => ({
-          ...e,
-          userAnswer:
-            location &&
-            location.state &&
-            location.state.examType &&
-            location.state.examType === "solved"
-              ? e.answer
-              : null,
-        }))
+      const selectedQuestions = randomQuestions(data.dataYaml).map(
+        (e: Question) => {
+          return {
+            ...e,
+            userAnswer:
+              location &&
+              location.state &&
+              location.state.examType &&
+              location.state.examType === "solved"
+                ? e.answer
+                : null,
+          } as Question;
+        }
       );
+
+      setQuestions(selectedQuestions);
     } catch (error) {}
   };
 
@@ -142,7 +144,14 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
                   <div className={styles.question__details}>
                     <div className={styles.question__image}>
                       {image ? (
-                        <img src={`/signs/${image}.png`} alt="Question" />
+                        <GatsbyImage
+                          image={
+                            image.childrenImageSharp[0]
+                              .gatsbyImageData as IGatsbyImageData
+                          }
+                          alt="Question"
+                          imgStyle={{ objectFit: "contain" }}
+                        />
                       ) : (
                         <ImageIcon />
                       )}
@@ -253,5 +262,25 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  {
+    dataYaml(id: { eq: "dd4c0425-68be-5293-bd5b-974762e5636c" }) {
+      noImage {
+        answer
+        text
+      }
+      withImage {
+        image {
+          childrenImageSharp {
+            gatsbyImageData(width: 200)
+          }
+        }
+        text
+        answer
+      }
+    }
+  }
+`;
 
 export default ExamPage;

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { navigate } from "gatsby";
+import { graphql, navigate } from "gatsby";
 
-import { StaticImage } from "gatsby-plugin-image";
+import {
+  GatsbyImage,
+  IGatsbyImageData,
+  StaticImage,
+} from "gatsby-plugin-image";
 
-import { QuestionList } from "@interface/utils";
+import { Question, QuestionList } from "@interface/utils";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
@@ -26,6 +30,12 @@ type Props = {
       questions: QuestionList[];
       timeCounter: number;
     } | null;
+  };
+  data: {
+    dataYaml: {
+      noImage: Question[];
+      withImage: Question[];
+    };
   };
 };
 
@@ -165,7 +175,14 @@ const Results: React.FC<Props> = ({ location }) => {
                       <div className={styles.question__content}>
                         <div className={styles.image}>
                           {image ? (
-                            <img src={`/images/${image}.png`} alt="Question" />
+                            <GatsbyImage
+                              image={
+                                image.childrenImageSharp[0]
+                                  .gatsbyImageData as IGatsbyImageData
+                              }
+                              alt="Question"
+                              imgStyle={{ objectFit: "contain" }}
+                            />
                           ) : (
                             <ImageIcon />
                           )}

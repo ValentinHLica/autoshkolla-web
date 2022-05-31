@@ -12,7 +12,10 @@ const config: GatsbyConfig = {
     "gatsby-plugin-sass",
     "gatsby-plugin-image",
     "gatsby-plugin-react-helmet",
+    "gatsby-transformer-sharp",
     "gatsby-plugin-sitemap",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-yaml",
     {
       resolve: "gatsby-plugin-manifest",
       options: {
@@ -23,16 +26,19 @@ const config: GatsbyConfig = {
         display: `standalone`,
       },
     },
-    "gatsby-plugin-mdx",
     {
-      resolve: `gatsby-plugin-sharp`,
+      resolve: `gatsby-transformer-remark`,
       options: {
-        defaults: {
-          backgroundColor: `transparent`,
-        },
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 300,
+            },
+          },
+        ],
       },
     },
-    "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
