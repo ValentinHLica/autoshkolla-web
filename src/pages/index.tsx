@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
 
+import { StaticImage } from "gatsby-plugin-image";
+
 import { ExamOptions } from "@interface/utils";
 
 import Layout from "@components/Layout";
@@ -9,7 +11,6 @@ import { Button, Checkbox } from "@ui";
 import { ClipboardIcon, ClipboardInIcon, ClipboardListIcon } from "@icon";
 
 import * as styles from "@styles/pages/home.module.scss";
-import { StaticImage } from "gatsby-plugin-image";
 
 const HomePage: React.FC = () => {
   const [examType, setExamType] = useState<ExamOptions>("normal");
@@ -42,9 +43,10 @@ const HomePage: React.FC = () => {
       <section className={styles.home}>
         <div className={styles.poster}>
           <StaticImage
-            src="../images/illustrations/drawkit-transport-scene-13.svg"
+            src="../images/illustrations/52.svg"
             alt="Intro"
             imgStyle={{ objectFit: "contain" }}
+            placeholder="none"
           />
         </div>
 

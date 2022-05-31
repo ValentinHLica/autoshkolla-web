@@ -1,8 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "gatsby";
 
-import { StaticImage } from "gatsby-plugin-image";
+import { ImageDataLike, StaticImage } from "gatsby-plugin-image";
 
+import questionsData from "../data/questions.json";
+
+import { randomQuestions } from "@utils/helper";
 import { ExamOptions, QuestionList } from "@interface/utils";
 
 import Layout from "@components/Layout";
@@ -25,9 +28,21 @@ type Props = {
       examType: ExamOptions;
     } | null;
   };
+  data: {
+    allFile: {
+      edges: {
+        node: {
+          name: string;
+          childImageSharp: {
+            gatsbyImageData: ImageDataLike;
+          };
+        };
+      }[];
+    };
+  };
 };
 
-const ExamPage: React.FC<Props> = ({ location }) => {
+const ExamPage: React.FC<Props> = ({ location, data }) => {
   const [examType, setExamType] = useState<ExamOptions>("normal");
   const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [questionIndex, setQuestionIndex] = useState<number>(0);
@@ -49,10 +64,8 @@ const ExamPage: React.FC<Props> = ({ location }) => {
 
   const fetchQuestions = async () => {
     try {
-      const res = await fetch("/api/questions");
-      const questions = await res.json();
       setQuestions(
-        (questions as QuestionList[]).map((e) => ({
+        randomQuestions(questionsData).map((e) => ({
           ...e,
           userAnswer:
             location &&
@@ -129,10 +142,7 @@ const ExamPage: React.FC<Props> = ({ location }) => {
                   <div className={styles.question__details}>
                     <div className={styles.question__image}>
                       {image ? (
-                        <img
-                          src={`../images/signs/${image}.png`}
-                          alt="Question"
-                        />
+                        <img src={`/signs/${image}.png`} alt="Question" />
                       ) : (
                         <ImageIcon />
                       )}
@@ -217,9 +227,10 @@ const ExamPage: React.FC<Props> = ({ location }) => {
 
               <StaticImage
                 className={styles.modal__image}
-                src="../images/illustrations/drawkit-transport-scene-2.svg"
+                src="../images/illustrations/7.svg"
                 alt="End"
                 imgStyle={{ objectFit: "contain" }}
+                placeholder="none"
               />
 
               <div className={styles.modal__actions}>

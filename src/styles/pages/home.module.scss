@@ -6,7 +6,8 @@
   flex-direction: column;
 
   .poster {
-    max-width: 70vw;
+    display: flex;
+    max-height: 60vh;
     margin-top: -50px;
     margin-bottom: 60px;
   }

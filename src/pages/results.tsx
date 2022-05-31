@@ -78,15 +78,17 @@ const Results: React.FC<Props> = ({ location }) => {
             <div className={styles.illustration}>
               {hasFailed ? (
                 <StaticImage
-                  src={`../images/illustrations/drawkit-transport-scene-10.svg`}
+                  src={`../images/illustrations/57.svg`}
                   alt="Illustration"
                   imgStyle={{ objectFit: "contain" }}
+                  placeholder="none"
                 />
               ) : (
                 <StaticImage
-                  src={`../images/illustrations/drawkit-transport-scene-3.svg`}
+                  src={`../images/illustrations/46.svg`}
                   alt="Illustration"
                   imgStyle={{ objectFit: "contain" }}
+                  placeholder="none"
                 />
               )}
             </div>
@@ -105,24 +107,24 @@ const Results: React.FC<Props> = ({ location }) => {
             <ul className={styles.question__stats}>
               <li>
                 <span>
-                  <strong>Ju mbaruat provimin ne:</strong> <ClockIcon />{" "}
+                  <p>Ju mbaruat provimin ne:</p> <ClockIcon />{" "}
                   {40 - timeCounter} min
                 </span>
               </li>
               <li>
                 <span>
                   <CheckSolidIcon />
-                  <strong>Pergjigje te sakta: </strong>
+                  <p>Pergjigje te sakta: </p>
                   {correctQuestions.length}
                 </span>
                 <span>
                   <XSolidIcon />
-                  <strong>Gabime: </strong>
+                  <p>Gabime: </p>
                   {wrongQuestions.length}
                 </span>
                 <span>
                   <QuestionMarkSolidIcon />
-                  <strong>Mungojne: </strong>
+                  <p>Mungojne: </p>
                   {emptyQuestions.length}
                 </span>
               </li>
@@ -195,7 +197,7 @@ const Results: React.FC<Props> = ({ location }) => {
                       </ul>
                     </div>
 
-                    <div className={styles.icon}>{icon}</div>
+                    <div>{icon}</div>
                   </li>
                 );
               })}

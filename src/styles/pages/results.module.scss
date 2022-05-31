@@ -67,15 +67,15 @@
     }
 
     .illustration {
-      img {
-        display: block;
-        width: 70%;
-        margin: auto;
+      // img {
+      //   display: block;
+      //   width: 70%;
+      //   margin: auto;
 
-        @include responsive(pc-small) {
-          width: 100%;
-        }
-      }
+      //   @include responsive(pc-small) {
+      //     width: 100%;
+      //   }
+      // }
     }
   }
 

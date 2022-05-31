@@ -43,6 +43,13 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
+        name: "data",
+        path: "./src/data/",
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
         name: "pages",
         path: "./src/pages/",
       },
@@ -57,6 +64,7 @@ const config: GatsbyConfig = {
           "@interface": "src/interface",
           "@icon": "src/components/CustomIcons.tsx",
           "@context": "src/components/Context.tsx",
+          "@utils": "src/utils",
         },
       },
     },
