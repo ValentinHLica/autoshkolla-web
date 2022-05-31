@@ -118,6 +118,8 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
     );
   };
 
+  console.log(data);
+
   return (
     <Layout>
       <Seo title="Provimi" />
