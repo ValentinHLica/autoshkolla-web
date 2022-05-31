@@ -118,8 +118,6 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
     );
   };
 
-  console.log(data);
-
   return (
     <Layout>
       <Seo title="Provimi" />
@@ -267,7 +265,7 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
 
 export const query = graphql`
   {
-    dataYaml(id: { eq: "dd4c0425-68be-5293-bd5b-974762e5636c" }) {
+    dataYaml {
       noImage {
         answer
         text
