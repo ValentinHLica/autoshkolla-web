@@ -1,16 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { graphql, Link } from "gatsby";
+import { graphql, Link, navigate } from "gatsby";
 
 import {
   GatsbyImage,
-  getImage,
   IGatsbyImageData,
-  ImageDataLike,
   StaticImage,
 } from "gatsby-plugin-image";
 
-import { randomQuestions } from "@utils/helper";
 import { ExamOptions, Question, QuestionList } from "@interface/utils";
+import { randomQuestions } from "@utils/helper";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
@@ -92,7 +90,7 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
 
     const timer = setInterval(() => {
       setTimeCounter((prevState) =>
-        prevState !== 1 ? prevState - 1 : prevState
+        prevState !== 0 ? prevState - 1 : prevState
       );
     }, 60000);
 
@@ -117,6 +115,14 @@ const ExamPage: React.FC<Props> = ({ location, data }) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (timeCounter === 0) {
+      navigate("/results", {
+        state: { questions, timeCounter },
+      });
+    }
+  }, [timeCounter]);
 
   return (
     <Layout>

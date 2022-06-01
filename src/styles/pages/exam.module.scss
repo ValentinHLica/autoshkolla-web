@@ -1,3 +1,5 @@
+@import "../responsivity";
+
 .exam {
   padding: 20px 4vw;
 
@@ -30,7 +32,14 @@
 
     .question__details {
       display: flex;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 10px;
+
+      @include responsive(mobile-large) {
+        align-items: flex-start;
+        flex-direction: row;
+      }
 
       .question__image {
         width: 220px;
@@ -55,15 +64,20 @@
       }
 
       .question__vote {
-        width: 50%;
-        margin-left: auto;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         background-color: white;
         border: 1px solid var(--gray-cool-300);
         border-radius: var(--border-radius);
         padding: 20px 30px;
+        width: 100%;
+
+        @include responsive(mobile-large) {
+          justify-content: space-between;
+          margin-left: auto;
+          width: 50%;
+        }
 
         ul {
           display: flex;
@@ -90,10 +104,16 @@
   }
 
   .questions__navigation {
-    display: grid;
-    grid-template-columns: 1fr 300px;
+    display: flex;
+    flex-direction: column-reverse;
     column-gap: 30px;
+    row-gap: 30px;
     margin-top: 30px;
+
+    @include responsive(mobile-large) {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+    }
 
     .pagination {
       display: flex;
@@ -179,6 +199,11 @@
   .modal__title {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 1.5em;
+
+    @include responsive(mobile-large) {
+      font-size: 2em;
+    }
   }
 
   .modal__image {
@@ -187,10 +212,17 @@
 
   .modal__actions {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     column-gap: 30px;
     margin-top: 40px;
+
+    @include responsive(mobile-large) {
+      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
 
     button {
       width: 100%;

@@ -1,15 +1,18 @@
+@import "../responsivity";
+
 .home {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  max-width: 90vw;
+  margin: auto;
 
   .poster {
     display: flex;
-    max-height: 60vh;
-    margin-top: -50px;
     margin-bottom: 60px;
+    max-height: 50vh;
   }
 
   .options {
@@ -18,6 +21,8 @@
     justify-content: center;
     margin-bottom: 20px;
     column-gap: 20px;
+    row-gap: 20px;
+    flex-wrap: wrap;
 
     li {
       display: flex;

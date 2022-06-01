@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { graphql, navigate } from "gatsby";
+import { navigate } from "gatsby";
 
 import {
   GatsbyImage,

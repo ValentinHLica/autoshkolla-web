@@ -41,6 +41,7 @@
   transition: visibility var(--transition-duration) var(--transition-animation),
     opacity var(--transition-duration) var(--transition-animation),
     transform var(--transition-duration) var(--transition-animation);
+  z-index: 2;
 
   &__hidden {
     visibility: hidden;
