@@ -11,7 +11,7 @@ Autoshkolla Online
 
 <img src="./assets/home.png"/>
 
-### 🙋 Test your self
+### 🙋 Test your self with more than 2000 questions
 
 <img src="./assets/exam.png"/>
 
