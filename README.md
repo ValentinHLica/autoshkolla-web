@@ -13,16 +13,16 @@ https://user-images.githubusercontent.com/74852397/176846774-95ee24bf-cda5-475d-
 ☑️ Chose Exam type and start test
 </h2>
 
-<img src="./assets/home.png"/>
+<img src="./assets/home.png" style="border-radius:14px"/>
 
 <h2 align="center">
 🙋 Test your self with more than 2000 questions
 </h2>
 
-<img src="./assets/exam.png"/>
+<img src="./assets/exam.png" style="border-radius:14px"/>
 
 <h2 align="center">
 ✨ Check if you passed
 </h2>
 
-<img src="./assets/result.png"/>
+<img src="./assets/result.png" style="border-radius:14px"/>
