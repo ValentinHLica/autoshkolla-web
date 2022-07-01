@@ -5,7 +5,7 @@
 Autoshkolla Online
 </h1>
 
-## 💡 Online theoretical tests for obtaining a Albanian driving license
+## ✨ ✍️ Online theoretical tests for obtaining a Albanian driving license ✨
 
 https://user-images.githubusercontent.com/74852397/176846774-95ee24bf-cda5-475d-a5a7-d1ba9d138dd7.mp4
 
